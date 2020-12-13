@@ -10,7 +10,6 @@ for group in groups:
     for answer in answers[1:]:
         common = common & answer
 
-    print(len(common))
     total += len(common)
 
 print(f'Total: {total}')
