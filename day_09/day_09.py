@@ -1,39 +1,57 @@
-import numpy as np
-
-
 def is_valid(lst, target):
-    # check if numbers in lst sum to target
-    half = target//2
-    n = len(input)
-    for i in range(n):
-        x = input[i]
-        if x <= half:
-            y = target - x
-            j = np.searchsorted(input[i+1:], y)
-            if input[j+i+1] == y:
-                return x * y, x, y
-    return 0, 0, 0
+    for i, i_val in enumerate(lst):
+        for j_val in lst[i:]:
+            if i_val + j_val == target:
+                return True
+    return False
+
+
+def get_set(lst, target):
+    def update():
+        global set
+        global s_sum
+        set = lst[left:right]
+        s_sum = sum(set)
+    # find a contiguous set in lst that sum to target
+
+    # split into sub lists without any numbers >= target
+    left = 0
+    right = 2
+    update()
+    while s_sum != target:
+        while s_sum < target:
+            right += 1
+            update()
+        while s_sum > target:
+            # set must be at least length 2
+            if left + 2 == right:
+                right += 1
+            left += 1
+            update()
+
+    return(set)
 
 
 f = open('input.txt', 'r')
 
-numbers = np.array(f.read().split())
+numbers = f.read().split()
+numbers = list(map(int, numbers))
 
 # length of preamble
-p_length = 5
-
-# sort preamble
-numbers[:p_length].sort()
+p_length = 25
 
 
-# new list with insertion sort
+# get invalid number
+invalid = None
 for i in range(p_length, len(numbers)):
-    sub_list = numbers[:i]
+    sub_list = numbers[i-p_length:i]
     target = numbers[i]
     if not is_valid(sub_list, target):
-        print(target)
-    # index to insert target to make numbers[:i+1] sorted
-    insert_i = np.searchsorted(sub_list, target)
-    numbers[:i+1] = np.hstack((numbers[:insert_i],
-                               target,
-                               numbers[insert_i:i]))
+        invalid = target
+        break
+
+# now get set:
+set = get_set(numbers, invalid)
+print(f'invalid = {invalid}')
+print(f'set = {set}')
+print(f'weakness = {max(set) + min(set)}')
