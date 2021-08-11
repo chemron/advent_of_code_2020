@@ -1,3 +1,5 @@
+# https://adventofcode.com/2020/day/8
+
 def run_to_loop(visited, acc_lst, instructions):
     # run program until loop is reached
     i = visited[-1]

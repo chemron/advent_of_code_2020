@@ -1,3 +1,5 @@
+# https://adventofcode.com/2020/day/9
+
 def is_valid(lst, target):
     for i, i_val in enumerate(lst):
         for j_val in lst[i:]:

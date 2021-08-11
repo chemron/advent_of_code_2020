@@ -1,3 +1,4 @@
+# https://adventofcode.com/2020/day/2
 f = open('input.txt', 'r')
 
 

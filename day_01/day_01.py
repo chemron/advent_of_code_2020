@@ -1,3 +1,4 @@
+# https://adventofcode.com/2020/day/1
 import numpy as np
 
 input = np.loadtxt('input.txt', dtype=int)

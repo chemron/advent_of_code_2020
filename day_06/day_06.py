@@ -1,3 +1,4 @@
+# https://adventofcode.com/2020/day/6
 f = open('input.txt', 'r')
 groups = f.read().split('\n\n')
 
