@@ -30,10 +30,9 @@ class seating():
             n += 1
             time.sleep(0.1)
 
-
         # no. of occupied seats
         n_occupied = self.as_string.count("#")
-        print(f"There are {n_occupied} occupied seats.")   
+        print(f"There are {n_occupied} occupied seats.")
 
     def step(self):
         new_layout = np.full(self.shape, ".")
@@ -41,10 +40,8 @@ class seating():
         for i in range(n):
             for j in range(m):
                 new_layout[i, j] = self._get_new_status(i, j)
-        
+
         return new_layout
-
-
 
     def _get_arr(self):
         # list of rows
@@ -69,20 +66,22 @@ class seating():
 
         adjacent_indices = [N, NE, E, SE, S, SW, W, NW]
         status = self.as_arr[i, j]
-        adjacent_status = [self._get_status(coord) for coord in adjacent_indices]
+        adjacent_status = [self._get_status(coord) for coord
+                           in adjacent_indices]
 
         # Floor (.) never changes
         if status == ".":
             return "."
-        # If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied
+        # If a seat is empty (L) and there are no occupied
+        # seats adjacent to it, the seat becomes occupied
         elif (status == "L") & ("#" not in adjacent_status):
             return "#"
-        # If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
+        # If a seat is occupied (#) and four or more seats
+        # adjacent to it are also occupied, the seat becomes empty.
         elif (status == "#") & (adjacent_status.count("#") >= 4):
             return "L"
         # Otherwise, the seat's state does not change.
         return status
-
 
     def _get_status(self, coord):
         # get status of seat at index i,j
@@ -93,13 +92,11 @@ class seating():
         else:
             return self.as_arr[i, j]
 
-
     def __str__(self) -> str:
         # list of rows
         rows = ["".join(row) for row in self.as_arr]
         # combine rows:
         return "\n".join(rows)
-
 
 
 seat_layout = seating(input)
